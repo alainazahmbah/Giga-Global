@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, Menu, X } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface MenuItem {
   name: string;
@@ -34,10 +35,7 @@ const menuItems: MenuItem[] = [
         name: 'Latin America and the Caribbean',
         href: '/where-we-work/latin-america-caribbean',
       },
-      {
-        name: 'Sub-Saharan Africa',
-        href: '/where-we-work/sub-saharan-africa',
-      },
+      { name: 'Sub-Saharan Africa', href: '/where-we-work/sub-saharan-africa' },
     ],
   },
   {
@@ -64,26 +62,39 @@ const Header: React.FC = () => {
 
   return (
     <header className="bg-[#277aff] text-white shadow-sm border-b border-white sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <motion.div
+        className="max-w-7xl mx-auto px-6 lg:px-8"
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+      >
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center space-x-3">
+          <motion.div
+            className="flex items-center space-x-3"
+            initial={{ x: -30, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
             <img
               src="https://s41713.pcdn.co/wp-content/uploads/2022/02/GIGA_lockup_white_horizontal-300x63.png"
               alt="Giga Logo"
               className="h-12 w-auto"
             />
-          </div>
+          </motion.div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
+          <motion.nav
+            className="hidden lg:flex items-center space-x-8"
+            initial={{ x: 30, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
             {menuItems.map((item) => (
               <div
                 key={item.name}
                 className="relative"
-                onMouseEnter={() =>
-                  item.subItems && setActiveDropdown(item.name)
-                }
+                onMouseEnter={() => item.subItems && setActiveDropdown(item.name)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
                 {item.href ? (
@@ -122,19 +133,18 @@ const Header: React.FC = () => {
                 )}
               </div>
             ))}
-          </nav>
+          </motion.nav>
 
           {/* Mobile Menu Button */}
-          <button
+          <motion.button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="lg:hidden p-2 rounded-md text-white hover:text-white hover:bg-blue-700 transition-colors duration-200"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.5, type: 'spring' }}
           >
-            {isMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
-          </button>
+            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </motion.button>
         </div>
 
         {/* Mobile Navigation */}
@@ -153,9 +163,7 @@ const Header: React.FC = () => {
                   ) : (
                     <button
                       onClick={() =>
-                        setActiveDropdown(
-                          activeDropdown === item.name ? null : item.name
-                        )
+                        setActiveDropdown(activeDropdown === item.name ? null : item.name)
                       }
                       className="flex items-center justify-between w-full px-4 py-3 text-white hover:text-white hover:bg-blue-700 rounded-md transition-colors duration-200"
                     >
@@ -189,7 +197,7 @@ const Header: React.FC = () => {
             </nav>
           </div>
         )}
-      </div>
+      </motion.div>
     </header>
   );
 };

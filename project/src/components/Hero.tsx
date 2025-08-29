@@ -7,7 +7,7 @@ const Hero: React.FC = () => {
       <img
         src={heroImg}
         alt="Hero"
-        className="w-full h-full object-cover"
+        className="w-full h-full object-cover hero-animate"
       />
     </section>
   );
